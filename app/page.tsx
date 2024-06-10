@@ -42,32 +42,37 @@ export default function Home() {
   };
 
   async function handleSourcesAndAnswer(question: string) {
-    let result = await fetch("/api/getResult", {
+    let result = await fetch("/api/google/search", {
       method: "POST",
       body: JSON.stringify({ question }),
     });
     let googleResult = await result.json();
     console.log("🚀 ~ handleDisplayResult ~ sources:", googleResult);
 
-    // let sourcesResponse = await fetch("/api/getSources", {
-    //   method: "POST",
-    //   body: JSON.stringify({ question }),
-    // });
-    // let sources = await sourcesResponse.json();
-
-    setSimilarQuestions(
-      googleResult.relatedSearches?.map(
+    let similarQuestions = [];
+    if (googleResult.relatedSearches) {
+      similarQuestions = googleResult.relatedSearches.map(
         (item: any) => item.query || item.title,
-      ) || [],
-    );
+      );
+      similarQuestions.length =
+        similarQuestions.length > 3 ? 3 : similarQuestions.length;
+    }
+    if (googleResult.peopleAlsoAsk) {
+      similarQuestions = googleResult.peopleAlsoAsk.map(
+        (item: any) => item.question,
+      );
+      similarQuestions.length =
+        similarQuestions.length > 3 ? 3 : similarQuestions.length;
+    }
+    setSimilarQuestions(similarQuestions);
+
     const source = googleResult.organic.map((item: any) => ({
       name: item.title,
       url: item.link,
     }));
-
     setSources(source);
 
-    const response = await fetch("/api/getAnswer", {
+    const response = await fetch("/api/getRagResult", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -115,15 +120,6 @@ export default function Home() {
       parser.feed(chunkValue);
     }
   }
-
-  // async function handleSimilarQuestions(question: string) {
-  //   let res = await fetch("/api/getSimilarQuestions", {
-  //     method: "POST",
-  //     body: JSON.stringify({ question }),
-  //   });
-  //   let questions = await res.json();
-  //   setSimilarQuestions(questions);
-  // }
 
   const reset = () => {
     setShowResult(false);

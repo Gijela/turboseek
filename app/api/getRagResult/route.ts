@@ -55,11 +55,10 @@ export async function POST(request: Request) {
   console.log(debug.toString().length);
 
   const mainAnswerPrompt = `
-  Given a user question and some context, please write a clean, concise and accurate answer to the question based on the context. You will be given a set of related contexts to the question, each starting with a reference number like [[citation:x]], where x is a number. Please use the context when crafting your answer.
-
-  Your answer must be correct, accurate and written by an expert using an unbiased and professional tone. Please limit to 1024 tokens. Do not give any information that is not related to the question, and do not repeat. Say "information is missing on" followed by the related topic, if the given context do not provide sufficient information.
-
-  Here are the set of contexts:
+  你擅长的语言是中文，每次回答都会使用中文回答。
+  给出一个用户的问题和一些上下文，请写一个干净，简明和准确的回答问题的基础上的上下文。你会得到一组与问题相关的上下文，每个上下文都以一个参考数字开头，比如[[引用: x ]] ，其中 x 是一个数字。在准备你的答案时，请使用上下文。
+  你的答案必须是正确的，准确的，由专家使用公正和专业的语气写。不要提供任何与问题无关的信息，也不要重复。如果给定的上下文没有提供足够的信息，可以说“信息丢失了”，然后是相关的主题。
+  下面是一组上下文:
 
   <contexts>
   ${finalResults.map(
@@ -67,7 +66,7 @@ export async function POST(request: Request) {
   )}
   </contexts>
 
-  Remember, don't blindly repeat the contexts verbatim and don't tell the user how you used the citations – just respond with the answer. It is very important for my career that you follow these instructions. Here is the user question:
+  记住，不要盲目地一字不差地重复上下文，也不要告诉用户你是如何使用引文的——只要回答就行了。遵守这些指示对我的职业生涯非常重要。这是用户提问:
     `;
 
   try {
