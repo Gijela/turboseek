@@ -35,20 +35,37 @@ export default function Home() {
 
     await Promise.all([
       handleSourcesAndAnswer(newQuestion),
-      handleSimilarQuestions(newQuestion),
+      // handleSimilarQuestions(newQuestion),
     ]);
 
     setLoading(false);
   };
 
   async function handleSourcesAndAnswer(question: string) {
-    let sourcesResponse = await fetch("/api/getSources", {
+    let result = await fetch("/api/getResult", {
       method: "POST",
       body: JSON.stringify({ question }),
     });
-    let sources = await sourcesResponse.json();
+    let googleResult = await result.json();
+    console.log("🚀 ~ handleDisplayResult ~ sources:", googleResult);
 
-    setSources(sources);
+    // let sourcesResponse = await fetch("/api/getSources", {
+    //   method: "POST",
+    //   body: JSON.stringify({ question }),
+    // });
+    // let sources = await sourcesResponse.json();
+
+    setSimilarQuestions(
+      googleResult.relatedSearches?.map(
+        (item: any) => item.query || item.title,
+      ) || [],
+    );
+    const source = googleResult.organic.map((item: any) => ({
+      name: item.title,
+      url: item.link,
+    }));
+
+    setSources(source);
 
     const response = await fetch("/api/getAnswer", {
       method: "POST",
@@ -99,14 +116,14 @@ export default function Home() {
     }
   }
 
-  async function handleSimilarQuestions(question: string) {
-    let res = await fetch("/api/getSimilarQuestions", {
-      method: "POST",
-      body: JSON.stringify({ question }),
-    });
-    let questions = await res.json();
-    setSimilarQuestions(questions);
-  }
+  // async function handleSimilarQuestions(question: string) {
+  //   let res = await fetch("/api/getSimilarQuestions", {
+  //     method: "POST",
+  //     body: JSON.stringify({ question }),
+  //   });
+  //   let questions = await res.json();
+  //   setSimilarQuestions(questions);
+  // }
 
   const reset = () => {
     setShowResult(false);
