@@ -7,7 +7,7 @@ const SourceCard = ({ source }: { source: ISource }) => {
       <div className="flex w-full items-center gap-2.5 ">
         <Image
           unoptimized
-          src={`https://www.google.com/s2/favicons?domain=${source.link}&sz=128`}
+          src={'/favicon.png'}
           alt={source.link}
           className="p-1"
           width={44}
