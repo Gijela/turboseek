@@ -7,15 +7,20 @@ import InputArea from "@/components/InputArea";
 import SourceCard from "@/components/SourceCard";
 import SimilarTopics from "@/components/SimilarTopics";
 import { Spin } from "antd";
+import { useEffect, useState } from "react";
 
 export default function SearchList() {
   const router = useRouter();
   const { loading, sources, similarQuestions, reset } = useSearch();
-  const screenHeight = window.innerHeight;
+  const [screenHeight, setScreenHeight] = useState<number>();
+
+  useEffect(() => {
+    setScreenHeight(Number(window.innerHeight));
+  }, []);
 
   return (
     <>
-      <div className="fixed z-[999] left-0 top-0 py-4 bg-white flex w-full justify-center border-b border-zinc-300">
+      <div className="fixed left-0 top-0 z-[999] flex w-full justify-center border-b border-zinc-300 bg-white py-4">
         <Image
           src={"/googleLogo.png"}
           width={100}
@@ -31,7 +36,9 @@ export default function SearchList() {
       </div>
 
       {/* google search result */}
-      <div className={`mt-[115px] h-[${screenHeight - 115}] overflow-y-auto flex flex-col items-center`}>
+      <div
+        className={`mt-[115px] h-[${screenHeight ? screenHeight - 115 : "auto"}] flex flex-col items-center overflow-y-auto`}
+      >
         <div className="my-8 flex w-full flex-col bg-white lg:max-w-[1080px]">
           <Spin tip="加载中..." spinning={!sources.length}>
             {sources.map((source, index) => (
