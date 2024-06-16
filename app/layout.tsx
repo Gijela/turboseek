@@ -1,11 +1,9 @@
 import type { Metadata } from "next";
-import { Lexend } from "next/font/google";
 import PlausibleProvider from "next-plausible";
 import "./globals.css";
+import { SearchContextProvider } from "@/components/provide/SearchProvide";
 
-const inter = Lexend({ subsets: ["latin"] });
-
-let title = "Turbo Seek – AI Search Engine";
+let title = "Google";
 let description =
   "Search smarter and faster with our open source AI search engine";
 let url = "https://turboseek.io/";
@@ -17,7 +15,7 @@ export const metadata: Metadata = {
   title,
   description,
   icons: {
-    icon: "/favicon.ico",
+    icon: "/favicon.png",
   },
   openGraph: {
     images: [ogimage],
@@ -46,10 +44,8 @@ export default function RootLayout({
       <head>
         <PlausibleProvider domain="turboseek.io" />
       </head>
-      <body
-        className={`${inter.className} flex min-h-screen flex-col justify-between`}
-      >
-        {children}
+      <body>
+        <SearchContextProvider>{children}</SearchContextProvider>
       </body>
     </html>
   );

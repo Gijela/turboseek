@@ -1,11 +1,8 @@
 import Image from "next/image";
 import SourceCard from "./SourceCard";
+import { ISource } from "./provide/SearchProvide";
 
-export default function Sources({
-  sources,
-}: {
-  sources: { name: string; url: string }[];
-}) {
+export default function Sources({ sources }: { sources: ISource[] }) {
   return (
     <div className="container h-auto w-full shrink-0 rounded-lg border border-solid border-[#C2C2C2] bg-white p-5 lg:p-10">
       <div className="flex items-start gap-4 pb-3 lg:pb-3.5">
@@ -22,8 +19,8 @@ export default function Sources({
       </div>
       <div className="flex w-full max-w-[890px] flex-wrap content-center items-center gap-[15px]">
         {sources.length > 0 ? (
-          sources.map((source) => (
-            <SourceCard source={source} key={source.url} />
+          sources.map((source, idx) => (
+            <SourceCard source={source} key={idx} />
           ))
         ) : (
           <>
