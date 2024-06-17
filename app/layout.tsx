@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import PlausibleProvider from "next-plausible";
 import "./globals.css";
 import { SearchContextProvider } from "@/components/provide/SearchProvide";
+import { Analytics } from "@vercel/analytics/react"
 
 let title = "Google";
 let description =
@@ -47,6 +48,7 @@ export default function RootLayout({
       <body>
         <SearchContextProvider>{children}</SearchContextProvider>
       </body>
+      <Analytics />
     </html>
   );
 }
