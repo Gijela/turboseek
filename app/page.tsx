@@ -12,6 +12,7 @@ import Image from "next/image";
 //   ReconnectInterval,
 // } from "eventsource-parser";
 import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 
 export default function Home() {
   // const [question, setQuestion] = useState("");
@@ -129,6 +130,10 @@ export default function Home() {
   //   setSources([]);
   //   setSimilarQuestions([]);
   // };
+
+  useEffect(() => {
+    console.log('测试 cr agent， 1+2', 1+2);
+  }, [])
 
   return (
     <>
