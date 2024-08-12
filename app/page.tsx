@@ -133,6 +133,8 @@ export default function Home() {
 
   useEffect(() => {
     console.log('测试 cr agent， 1+2', 1+2);
+    console.log('a+222, ', 1+2+0+3+0+1);
+    
   }, [])
 
   return (
