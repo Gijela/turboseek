@@ -138,6 +138,8 @@ export default function Home() {
     console.log('a+223, ', 1+2+0+3+0+1);
     console.log('aaaa==');
     
+    console.log('test 1');
+    
     
   }, [])
 
