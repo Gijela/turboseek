@@ -2,6 +2,7 @@
 
 // import Answer from "@/components/Answer";
 import InputArea from "@/components/InputArea";
+import { log } from "console";
 // import SimilarTopics from "@/components/SimilarTopics";
 // import Sources from "@/components/Sources";
 import Image from "next/image";
@@ -135,6 +136,8 @@ export default function Home() {
     console.log('测试 cr agent， 1+2', 1+2);
     console.log('a+222, ', 1+2+0+3+0+1);
     console.log('a+223, ', 1+2+0+3+0+1);
+    console.log('aaaa==');
+    
     
   }, [])
 
